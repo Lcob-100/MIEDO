@@ -7,20 +7,20 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #fff3e0;
+      background: #e0f7fa;
       color: #333;
       max-width: 700px;
       margin: auto;
       padding: 20px;
     }
     h1 {
-      color: #ef6c00;
+      color: #26c6da;
     }
     .question {
       margin-bottom: 20px;
     }
     button {
-      background: #ef6c00;
+      background: #26c6da;
       color: white;
       border: none;
       padding: 10px 20px;
@@ -38,29 +38,34 @@
 <body>
   <h1>¿Qué nivel de miedo estás sintiendo ahora?</h1>
   <form id="testForm"></form>
-  <button onclick="calcularResultado()" type="button">Ver resultado</button>
+  <button onclick="calcularResultado()">Ver resultado</button>
   <div class="result" id="resultado"></div>
 
   <script>
     const preguntas = [
-      "¿Sientes que algo malo podría pasar hoy?",
-      "¿Sientes tensión física o un nudo en el estómago sin una razón clara?",
-      "¿Estás evitando algo por miedo a lo que pueda pasar?",
-      "¿Te preocupa lo que podría salir mal pronto?",
-      "¿Sientes que necesitas estar alerta todo el tiempo?",
-      "¿Tu respiración se ha acelerado o sientes palpitaciones?",
-      "¿Piensas con frecuencia en cosas que podrían salir mal?",
-      "¿Hay algo que te paraliza o bloquea completamente?",
-      "¿Sientes una amenaza aunque no puedas identificarla claramente?",
-      "¿Te cuesta dormir o concentrarte por preocupaciones?"
+      "¿Sientes que algo malo podría pasar sin tener una razón clara?",
+      "¿Estás evitando alguna situación o persona por miedo?",
+      "¿Tu cuerpo ha estado en tensión o alerta sin motivo aparente?",
+      "¿Piensas constantemente en escenarios negativos o peligrosos?",
+      "¿Sientes que no puedes controlar lo que temes?",
+      "¿Te cuesta respirar o sientes palpitaciones cuando piensas en eso?",
+      "¿Prefieres no hablar de lo que te asusta por temor a que empeore?",
+      "¿Tu miedo te está limitando para hacer cosas que normalmente harías?",
+      "¿Tienes dificultad para dormir o descansar por estar preocupado/a?",
+      "¿Tu miedo aparece incluso en momentos tranquilos, sin aviso?"
     ];
 
     const opciones = [
-      "No, me siento tranquilo/a.",
-      "Un poco inquieto/a, pero en control.",
-      "Siento ansiedad o preocupación.",
-      "Tengo miedo o pánico evidente.",
-      "Estoy paralizado/a o profundamente asustado/a."
+      ["No, me siento tranquilo/a.","Un poco.","Sí, a veces.","Sí, con frecuencia.","Sí, constantemente."],
+      ["No, todo está bien.","Una o dos cosas.","Algunas situaciones.","Muchas cosas.","Evito casi todo lo que me asusta."],
+      ["No, estoy relajado/a.","Un poco tenso/a.","Sí, algo tenso/a.","Muy tenso/a.","Mi cuerpo está en estado de alerta todo el tiempo."],
+      ["No pienso en eso.","A veces me pasa.","Sí, seguido.","Casi todo el día.","Es lo único que pienso."],
+      ["No es tan grave.","A veces pierdo el control.","Siento que me domina.","No puedo manejarlo.","Me siento completamente superado/a."],
+      ["No me pasa.","Muy ocasionalmente.","Sí, algunas veces.","Con frecuencia.","Sí, cada vez más seguido."],
+      ["No me cuesta.","A veces prefiero callar.","Sí, evito hablarlo.","Me da miedo hablarlo.","No puedo hablar de eso en absoluto."],
+      ["No me limita.","A veces lo evito.","Sí, lo pospongo.","Sí, me paraliza.","He dejado de hacer cosas importantes por eso."],
+      ["Duermo bien.","A veces me cuesta.","Sí, duermo mal.","Me desvelo o tengo pesadillas.","Casi no descanso por el miedo."],
+      ["No, solo cuando hay peligro real.","Rara vez.","Sí, inesperadamente.","Muy seguido.","El miedo aparece sin razón aparente."]
     ];
 
     const form = document.getElementById("testForm");
@@ -68,7 +73,7 @@
       const div = document.createElement("div");
       div.classList.add("question");
       div.innerHTML = `<p>${i + 1}. ${pregunta}</p>`;
-      opciones.forEach((op, j) => {
+      opciones[i].forEach((op, j) => {
         div.innerHTML += `<label><input type="radio" name="p${i}" value="${j + 1}"> ${op}</label><br>`;
       });
       form.appendChild(div);
@@ -84,5 +89,32 @@
       }
 
       let resultado = "";
-      if (total <= 16) resultado = "Nivel: Inquietud";
-      else if (total <= 24) r
+      let urlConsejo = "";
+
+      if (total <= 16) {
+        resultado = "Nivel: Inquietud";
+        urlConsejo = "consejos-nivel1.html";
+      } else if (total <= 24) {
+        resultado = "Nivel: Ansiedad / Preocupación";
+        urlConsejo = "consejos-nivel2.html";
+      } else if (total <= 32) {
+        resultado = "Nivel: Temor";
+        urlConsejo = "consejos-nivel3.html";
+      } else if (total <= 40) {
+        resultado = "Nivel: Pánico / Terror";
+        urlConsejo = "consejos-nivel4.html";
+      } else {
+        resultado = "Nivel: Miedo traumático / Paralizante";
+        urlConsejo = "consejos-nivel5.html";
+      }
+
+      document.getElementById("resultado").innerText = resultado;
+
+      // Redirección automática después de 4 segundos
+      setTimeout(() => {
+        window.location.href = urlConsejo;
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
