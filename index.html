@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test de Nivel de Miedo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff3e0;
+      color: #333;
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #ef6c00;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    button {
+      background: #ef6c00;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    .result {
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>¿Qué nivel de miedo estás sintiendo ahora?</h1>
+  <form id="testForm"></form>
+  <button onclick="calcularResultado()" type="button">Ver resultado</button>
+  <div class="result" id="resultado"></div>
+
+  <script>
+    const preguntas = [
+      "¿Sientes que algo malo podría pasar hoy?",
+      "¿Sientes tensión física o un nudo en el estómago sin una razón clara?",
+      "¿Estás evitando algo por miedo a lo que pueda pasar?",
+      "¿Te preocupa lo que podría salir mal pronto?",
+      "¿Sientes que necesitas estar alerta todo el tiempo?",
+      "¿Tu respiración se ha acelerado o sientes palpitaciones?",
+      "¿Piensas con frecuencia en cosas que podrían salir mal?",
+      "¿Hay algo que te paraliza o bloquea completamente?",
+      "¿Sientes una amenaza aunque no puedas identificarla claramente?",
+      "¿Te cuesta dormir o concentrarte por preocupaciones?"
+    ];
+
+    const opciones = [
+      "No, me siento tranquilo/a.",
+      "Un poco inquieto/a, pero en control.",
+      "Siento ansiedad o preocupación.",
+      "Tengo miedo o pánico evidente.",
+      "Estoy paralizado/a o profundamente asustado/a."
+    ];
+
+    const form = document.getElementById("testForm");
+    preguntas.forEach((pregunta, i) => {
+      const div = document.createElement("div");
+      div.classList.add("question");
+      div.innerHTML = `<p>${i + 1}. ${pregunta}</p>`;
+      opciones.forEach((op, j) => {
+        div.innerHTML += `<label><input type="radio" name="p${i}" value="${j + 1}"> ${op}</label><br>`;
+      });
+      form.appendChild(div);
+    });
+
+    function calcularResultado() {
+      let total = 0;
+      for (let i = 0; i < preguntas.length; i++) {
+        const respuesta = document.querySelector(`input[name="p${i}"]:checked`);
+        if (respuesta) {
+          total += parseInt(respuesta.value);
+        }
+      }
+
+      let resultado = "";
+      if (total <= 16) resultado = "Nivel: Inquietud";
+      else if (total <= 24) r
